@@ -12,16 +12,60 @@ import { Send, CheckCircle } from "lucide-react"
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    organization: "",
+    phone: "",
+    service: "",
+    message: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null)
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          message: `Service of Interest: ${formData.service}\nPhone: ${formData.phone || "Not provided"}\n\n${formData.message}`,
+        }),
+      })
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong")
+      }
+
+      setIsSubmitted(true)
+      setFormData({
+        name: "",
+        email: "",
+        organization: "",
+        phone: "",
+        service: "",
+        message: "",
+      })
+    } catch (error) {
+      setError((error as Error).message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -53,22 +97,58 @@ export function ContactForm() {
           <form className="grid gap-3" onSubmit={handleSubmit}>
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <Input placeholder="Full Name" className="text-sm h-9" required disabled={isSubmitting} />
+                <Input
+                  placeholder="Full Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="text-sm h-9"
+                  required
+                  disabled={isSubmitting}
+                />
               </div>
               <div>
-                <Input placeholder="Email" type="email" className="text-sm h-9" required disabled={isSubmitting} />
+                <Input
+                  placeholder="Email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="text-sm h-9"
+                  required
+                  disabled={isSubmitting}
+                />
               </div>
             </div>
             <div>
-              <Input placeholder="Organization" className="text-sm h-9" required disabled={isSubmitting} />
+              <Input
+                placeholder="Organization"
+                name="organization"
+                value={formData.organization}
+                onChange={handleChange}
+                className="text-sm h-9"
+                required
+                disabled={isSubmitting}
+              />
             </div>
             <div>
-              <Input placeholder="Phone Number (Optional)" type="tel" className="text-sm h-9" disabled={isSubmitting} />
+              <Input
+                placeholder="Phone Number (Optional)"
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="text-sm h-9"
+                disabled={isSubmitting}
+              />
             </div>
             <div>
               <select
                 className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                 defaultValue=""
+                name="service"
+                value={formData.service}
+                onChange={handleChange}
                 required
                 disabled={isSubmitting}
               >
@@ -85,11 +165,15 @@ export function ContactForm() {
             <div>
               <Textarea
                 placeholder="Your Message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 className="min-h-[120px] text-sm resize-none"
                 required
                 disabled={isSubmitting}
               />
             </div>
+            {error && <div className="text-sm text-red-500 mt-1">{error}</div>}
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? "Sending..." : "Send Message"}
             </Button>

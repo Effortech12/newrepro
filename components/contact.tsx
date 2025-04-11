@@ -1,12 +1,66 @@
 "use client"
 
+import type React from "react"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail, MapPin, Send } from "lucide-react"
+import { Mail, MapPin, Send, CheckCircle } from "lucide-react"
 
 export function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    organization: "",
+    message: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setError(null)
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong")
+      }
+
+      setIsSubmitted(true)
+      setFormData({
+        name: "",
+        email: "",
+        organization: "",
+        message: "",
+      })
+    } catch (error) {
+      setError((error as Error).message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <section id="contact" className="py-8 bg-gradient-to-b from-background/95 to-background">
       <div className="container">
@@ -29,32 +83,74 @@ export function Contact() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form
-                className="grid gap-3"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  // You would typically handle form submission here
-                  alert("Message sent! We'll get back to you soon.")
-                }}
-              >
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div>
-                    <Input placeholder="Full Name" className="text-sm h-9" />
+              {isSubmitted ? (
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                  <div className="rounded-full bg-green-500/10 p-3 mb-4">
+                    <CheckCircle className="h-8 w-8 text-green-500" />
+                  </div>
+                  <h3 className="text-xl font-medium mb-2">Message Sent!</h3>
+                  <p className="text-sm text-muted-foreground mb-6 max-w-md">
+                    Thank you for reaching out. Our team will review your message and get back to you within 24-48
+                    hours.
+                  </p>
+                  <Button variant="outline" onClick={() => setIsSubmitted(false)}>
+                    Send Another Message
+                  </Button>
+                </div>
+              ) : (
+                <form className="grid gap-3" onSubmit={handleSubmit}>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <Input
+                        placeholder="Full Name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="text-sm h-9"
+                        required
+                        disabled={isSubmitting}
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        placeholder="Email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="text-sm h-9"
+                        required
+                        disabled={isSubmitting}
+                      />
+                    </div>
                   </div>
                   <div>
-                    <Input placeholder="Email" type="email" className="text-sm h-9" />
+                    <Input
+                      placeholder="Organization"
+                      name="organization"
+                      value={formData.organization}
+                      onChange={handleChange}
+                      className="text-sm h-9"
+                      disabled={isSubmitting}
+                    />
                   </div>
-                </div>
-                <div>
-                  <Input placeholder="Organization" className="text-sm h-9" />
-                </div>
-                <div>
-                  <Textarea placeholder="Your Message" className="min-h-[80px] text-sm resize-none" />
-                </div>
-                <Button type="submit" className="w-full">
-                  Send Message
-                </Button>
-              </form>
+                  <div>
+                    <Textarea
+                      placeholder="Your Message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="min-h-[80px] text-sm resize-none"
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  {error && <div className="text-sm text-red-500 mt-1">{error}</div>}
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+              )}
             </CardContent>
           </Card>
 
@@ -69,10 +165,10 @@ export function Contact() {
                     <h3 className="font-medium text-sm">Email Us</h3>
                     <p className="text-xs text-muted-foreground mt-1">Our friendly team is here to help</p>
                     <a
-                      href="mailto:info@effor.tech"
+                      href="mailto:efforts@effor.tech"
                       className="text-xs text-cyan-400 hover:underline mt-1 inline-block"
                     >
-                      info@effor.tech
+                      efforts@effor.tech
                     </a>
                   </div>
                 </div>
