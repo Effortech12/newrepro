@@ -35,10 +35,10 @@ export function Header() {
             Services
           </Link>
           <Link
-            href="/#about"
+            href="/about-us"
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary",
-              isActive("/#about") ? "text-primary" : "text-muted-foreground",
+              isActive("/about-us") ? "text-primary" : "text-muted-foreground",
             )}
           >
             About
@@ -94,10 +94,10 @@ export function Header() {
               Services
             </Link>
             <Link
-              href="/#about"
+              href="/about-us"
               className={cn(
                 "text-sm font-medium transition-colors hover:text-primary",
-                isActive("/#about") ? "text-primary" : "text-muted-foreground",
+                isActive("/about-us") ? "text-primary" : "text-muted-foreground",
               )}
               onClick={() => setIsMenuOpen(false)}
             >
