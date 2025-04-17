@@ -53,7 +53,7 @@ export function Header() {
             Careers
           </Link>
           <a
-            href="https://www.effor.tech/academy/"
+            href="https://effortechacademy.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground flex items-center gap-1"
@@ -114,7 +114,7 @@ export function Header() {
               Careers
             </Link>
             <a
-              href="https://www.effor.tech/academy/"
+              href="https://effortechacademy.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground flex items-center gap-1"
