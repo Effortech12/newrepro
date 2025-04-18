@@ -13,7 +13,7 @@ export function Footer() {
             </p>
             <div className="flex space-x-2">
               
-              <Link href="#" className="text-muted-foreground hover:text-primary">
+              <Link href="https://www.linkedin.com/company/effortech-technology/posts/?feedView=all" className="text-muted-foreground hover:text-primary">
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
