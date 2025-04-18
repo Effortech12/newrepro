@@ -21,22 +21,7 @@ export function ContactInfo() {
         </CardContent>
       </Card>
 
-      <Card className="bg-background/50 border-purple-900/20">
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <div className="rounded-lg bg-purple-900/20 p-2">
-              <Phone className="h-4 w-4 text-purple-400" />
-            </div>
-            <div>
-              <h3 className="font-medium text-sm">Call Us</h3>
-              <p className="text-xs text-muted-foreground mt-1">For urgent inquiries</p>
-              <a href="tel:+919876543210" className="text-xs text-purple-400 hover:underline mt-1 inline-block">
-                +91 98765 43210
-              </a>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    
 
       <Card className="bg-background/50 border-cyan-900/20">
         <CardContent className="p-4">
