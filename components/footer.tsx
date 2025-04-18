@@ -12,22 +12,12 @@ export function Footer() {
               Technology Risk Management solutions for the financial sector in India.
             </p>
             <div className="flex space-x-2">
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Facebook className="h-4 w-4" />
-                <span className="sr-only">Facebook</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Twitter className="h-4 w-4" />
-                <span className="sr-only">Twitter</span>
-              </Link>
+              
               <Link href="#" className="text-muted-foreground hover:text-primary">
                 <Linkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Instagram className="h-4 w-4" />
-                <span className="sr-only">Instagram</span>
-              </Link>
+          
             </div>
           </div>
 
