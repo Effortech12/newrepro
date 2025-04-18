@@ -25,27 +25,27 @@ export function Footer() {
             <h3 className="mb-1 text-xs font-medium">Services</h3>
             <ul className="space-y-1 text-xs">
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link href="https://www.effor.tech/observability" className="text-muted-foreground hover:text-primary">
                   Business Service Observability
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link href="https://www.effor.tech/audit-compliance" className="text-muted-foreground hover:text-primary">
                   Audit & Compliance as a Service
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link href="https://www.effor.tech/trik" className="text-muted-foreground hover:text-primary">
                   Internal Risk Management Tool - TRIK
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link href="https://www.effor.tech/automation" className="text-muted-foreground hover:text-primary">
                   Automation
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link href="https://www.effor.tech/program-management" className="text-muted-foreground hover:text-primary">
                   Program Management
                 </Link>
               </li>
