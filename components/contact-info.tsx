@@ -13,8 +13,8 @@ export function ContactInfo() {
             <div>
               <h3 className="font-medium text-sm">Email Us</h3>
               <p className="text-xs text-muted-foreground mt-1">Our friendly team is here to help</p>
-              <a href="mailto:info@effor.tech" className="text-xs text-cyan-400 hover:underline mt-1 inline-block">
-                info@effor.tech
+              <a href="mailto:efforts@effor.tech" className="text-xs text-cyan-400 hover:underline mt-1 inline-block">
+                efforts@effor.tech
               </a>
             </div>
           </div>
